@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:squadio_test/bloc/firm_bloc/firm_events.dart';
+import 'package:squadio_test/routes.dart';
+import 'package:squadio_test/screens/home_screen.dart';
+
+import 'bloc/firm_bloc/firm_bloc.dart';
+
+//flutter packages pub run build_runner build --delete-conflicting-outputs
 
 void main() {
   runApp(const MyApp());
@@ -9,12 +18,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ScreenUtilInit(
+      designSize: const Size(393, 808),
+      builder: (BuildContext context, Widget? child) => BlocProvider(
+        create: (_) => FirmsBloc()..add(FetchFirms()),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: HomeScreen.routeName,
+          routes: routes,
+        ),
       ),
     );
   }
 }
-
