@@ -5,7 +5,6 @@ import 'package:squadio_test/bloc/firm_bloc/firm_events.dart';
 import 'package:squadio_test/bloc/firm_bloc/firm_states.dart';
 import 'package:squadio_test/screens/login_screen.dart';
 import 'package:squadio_test/widgets/firm_widget.dart';
-
 import '../helpers/navigators.dart';
 
 class HomeScreen extends StatelessWidget {

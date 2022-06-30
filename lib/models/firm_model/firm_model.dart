@@ -4,7 +4,7 @@ part 'firm_model.g.dart';
 
 @JsonSerializable()
 class FirmModel {
-  List? data;
+  List<Data>? data;
   String? message;
 
   FirmModel({this.data, this.message});

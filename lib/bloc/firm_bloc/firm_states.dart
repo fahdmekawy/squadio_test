@@ -14,7 +14,7 @@ class FirmsLoading extends FirmsState {}
 class FirmsLoaded extends FirmsState {
   final List? data;
 
-  FirmsLoaded({this.data});
+   FirmsLoaded({this.data});
 }
 
 class FirmsFailed extends FirmsState {

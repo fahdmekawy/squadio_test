@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class LoginButton extends StatelessWidget {
-  const LoginButton({
-    Key? key,
-  }) : super(key: key);
+  final Function()? onTap;
+
+ const LoginButton({this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +12,9 @@ class LoginButton extends StatelessWidget {
       width: 1.sw,
       height: 50.h,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor:
-          MaterialStateProperty.all<Color>(Colors.black87),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
         ),
         child: const Text(
           'Login',
