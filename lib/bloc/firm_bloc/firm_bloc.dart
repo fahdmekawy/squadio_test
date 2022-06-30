@@ -13,7 +13,11 @@ class FirmsBloc extends Bloc<FirmsEvent, FirmsState> {
     emit(FirmsLoading());
     try {
       FirmModel firmModel = await FirmRepository.getFirms();
-      emit(FirmsLoaded(firmModel: firmModel));
+
+      List firmNamesSorted = firmModel.data!
+        ..sort((a, b) => a.firm.compareTo(b.firm));
+
+      emit(FirmsLoaded(data: firmNamesSorted));
     } catch (e) {
       emit(FirmsFailed(e.toString()));
     }

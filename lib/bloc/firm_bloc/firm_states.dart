@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:squadio_test/models/firm_model/firm_model.dart';
 
 abstract class FirmsState extends Equatable {
   const FirmsState();
@@ -13,9 +12,9 @@ class FirmsUninitialized extends FirmsState {}
 class FirmsLoading extends FirmsState {}
 
 class FirmsLoaded extends FirmsState {
-  final FirmModel? firmModel;
+  final List? data;
 
-  FirmsLoaded({this.firmModel});
+  FirmsLoaded({this.data});
 }
 
 class FirmsFailed extends FirmsState {

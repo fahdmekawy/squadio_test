@@ -6,6 +6,7 @@ import '../constants.dart';
 
 class FirmRepository {
   static Future<FirmModel> getFirms() async {
+
     var response = await http.get(
       Uri.parse(Constants.firmApi),
       headers: {
