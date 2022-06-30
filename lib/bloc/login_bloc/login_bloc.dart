@@ -16,7 +16,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginResponse loginResponse = await LoginRepository.loginUser(
           loginModel: event.loginModel, subDomain: event.subDomain);
 
-      if (loginResponse.data == null) {
+      if (loginResponse.data != null) {
         emit(LoginSuccess(loginResponse: loginResponse));
       } else {}
     } catch (e) {

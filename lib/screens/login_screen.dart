@@ -25,11 +25,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
 
-   bool isShow =true;
+  bool isShow = true;
 
   TextEditingController? emailController;
   TextEditingController? passwordController;
-
 
   @override
   Widget build(BuildContext context) {
