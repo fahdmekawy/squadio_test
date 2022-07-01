@@ -5,8 +5,8 @@ import 'package:squadio_test/bloc/login_bloc/login_bloc.dart';
 import 'package:squadio_test/bloc/login_bloc/login_events.dart';
 import 'package:squadio_test/bloc/login_bloc/login_states.dart';
 import 'package:squadio_test/models/user_model/login_model.dart';
+import 'package:squadio_test/repositories/authentication_repositroy.dart';
 import 'package:squadio_test/screens/people_screen.dart';
-
 import '../helpers/navigators.dart';
 import '../widgets/appbar.dart';
 import '../widgets/email_text_field.dart';
@@ -23,25 +23,28 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-
   bool isShow = true;
 
-  TextEditingController? emailController;
-  TextEditingController? passwordController;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     String? subdomain = ModalRoute.of(context)?.settings.arguments as String?;
 
     return Scaffold(
-      appBar: buildAppBar('Login Screen', true),
+      appBar:
+          buildAppBar(logOutButton: false, title: 'Login', backButton: false),
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(),
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              pushName(context, PeopleScreen.routeName);
+              saveToken(state.loginResponse.data.token);
+              pushNameWithArguments(
+                context,
+                PeopleScreen.routeName,[state.loginResponse.data.token,subdomain]
+              );
             } else if (state is LoginFailed) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message ?? '')));
@@ -51,59 +54,56 @@ class _LoginScreenState extends State<LoginScreen> {
             LoginBloc loginBloc = BlocProvider.of(context);
             return Center(
               child: SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Login',
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30.sp,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Login',
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30.sp,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 16.h),
-                        EmailTextField(emailController: emailController),
-                        SizedBox(height: 16.h),
-                        PasswordTextField(
-                            isShow: isShow,
-                            showPass: () {
-                              setState(() {
-                                isShow = !isShow;
-                              });
-                            },
-                            passwordController: passwordController),
-                        SizedBox(height: 16.h),
-                        state is LoginLoading
-                            ? const Center(
-                                child: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(),
-                                ),
-                              )
-                            : LoginButton(
-                                onTap: () {
-                                  loginBloc.add(
-                                    LoginPressed(
-                                      loginModel: LoginModel(
-                                        email: emailController?.text,
-                                        password: passwordController?.text,
-                                      ),
-                                      subDomain: subdomain,
+                      ),
+                      SizedBox(height: 16.h),
+                      EmailTextField(emailController: emailController),
+                      SizedBox(height: 16.h),
+                      PasswordTextField(
+                          isShow: isShow,
+                          showPass: () {
+                            setState(() {
+                              isShow = !isShow;
+                            });
+                          },
+                          passwordController: passwordController),
+                      SizedBox(height: 16.h),
+                      state is LoginLoading
+                          ? const Center(
+                              child: SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          : LoginButton(
+                              onTap: () {
+                                loginBloc.add(
+                                  LoginPressed(
+                                    loginModel: LoginModel(
+                                      email: emailController.text,
+                                      password: passwordController.text,
                                     ),
-                                  );
-                                },
-                              )
-                      ],
-                    ),
+                                    subDomain: subdomain,
+                                  ),
+                                );
+                              },
+                            )
+                    ],
                   ),
                 ),
               ),

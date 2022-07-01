@@ -7,6 +7,4 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => const HomeScreen(),
   LoginScreen.routeName: (context) => const LoginScreen(),
   PeopleScreen.routeName: (context) => const PeopleScreen(),
-
-
 };

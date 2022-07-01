@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'people_model.g.dart';
 
 @JsonSerializable()
-class PeopleModel {
+class PeopleModel extends Equatable{
   Data? data;
   String? message;
 
@@ -13,6 +14,11 @@ class PeopleModel {
       _$PeopleModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PeopleModelToJson(this);
+
+
+  @override
+
+  List<Object?> get props => [data,message];
 }
 
 @JsonSerializable()
@@ -33,8 +39,9 @@ class Result {
   String? name;
   String? email;
   String? phone_number;
+  bool isSelected;
 
-  Result({this.id, this.name, this.email, this.phone_number});
+  Result({this.id, this.name, this.email, this.phone_number,this.isSelected = false});
 
   factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
 

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PasswordTextField extends StatelessWidget {
-  final TextEditingController? passwordController;
+  final TextEditingController passwordController;
   final String? Function(String?)? validator;
   final bool? isShow;
   final Function()? showPass;
 
   const PasswordTextField(
-      {this.passwordController,
+      {required this.passwordController,
       this.validator,
       this.isShow ,
       this.showPass});

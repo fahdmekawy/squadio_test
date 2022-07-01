@@ -9,12 +9,27 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
     on<FetchPeople>(getPeople);
   }
 
+  int page = 0;
+  List<Result> data = [];
+  bool hasReachMax = false;
+
   Future<void> getPeople(FetchPeople event, Emitter<PeopleState> emit) async {
     emit(PeopleLoading());
     try {
-      PeopleModel peopleModel = await PeopleRepository.getPeople();
+      if (hasReachMax) {
+        return;
+      }
+      page++;
+      PeopleModel peopleModel = await PeopleRepository.getPeople(
+          subDomain: event.subDomain, page: page, token: event.token);
 
-      emit(PeopleLoaded(peopleModel: peopleModel));
+      if ((peopleModel.data?.pagination?.current_page ?? 0) >=
+          (peopleModel.data?.pagination?.total_pages ?? 0)) {
+        hasReachMax = true;
+      }
+      data.addAll(peopleModel.data?.result ?? []);
+
+      emit(PeopleLoaded(peopleModel: data));
     } catch (e) {
       emit(PeopleFailed(e.toString()));
     }

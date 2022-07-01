@@ -14,7 +14,10 @@ class FirmsLoading extends FirmsState {}
 class FirmsLoaded extends FirmsState {
   final List? data;
 
-   FirmsLoaded({this.data});
+   const FirmsLoaded({this.data});
+
+   @override
+  List<Object> get props => [data??[]];
 }
 
 class FirmsFailed extends FirmsState {

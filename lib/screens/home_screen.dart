@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:squadio_test/bloc/firm_bloc/firm_bloc.dart';
 import 'package:squadio_test/bloc/firm_bloc/firm_events.dart';
 import 'package:squadio_test/bloc/firm_bloc/firm_states.dart';
+import 'package:squadio_test/repositories/authentication_repositroy.dart';
 import 'package:squadio_test/screens/login_screen.dart';
 import 'package:squadio_test/widgets/firm_widget.dart';
 import '../helpers/navigators.dart';
@@ -35,11 +36,10 @@ class HomeScreen extends StatelessWidget {
                       controller: scrollController,
                       itemCount: state.data?.length,
                       itemBuilder: (context, index) => FirmWidget(
-                            onTap: () => pushNameWithArguments(
-                              context,
-                              LoginScreen.routeName,
-                              state.data?[index]?.subdomain,
-                            ),
+                            onTap: () {
+                              saveDomain(state.data?[index]?.subdomain);
+                              pushNameWithArguments(context, LoginScreen.routeName,state.data?[index]?.subdomain);
+                            },
                             firmName: state.data?[index]?.firm,
                           )),
                 ),

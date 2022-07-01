@@ -13,4 +13,7 @@ class LoginPressed extends LoginEvent {
   final String? subDomain;
 
   const LoginPressed({required this.loginModel,required this.subDomain});
+
+  @override
+  List<Object> get props => [loginModel,subDomain??''];
 }

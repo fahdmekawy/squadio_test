@@ -13,9 +13,11 @@ class PeopleUninitialized extends PeopleState {}
 class PeopleLoading extends PeopleState {}
 
 class PeopleLoaded extends PeopleState {
-  final PeopleModel? peopleModel;
+  final List<Result> peopleModel;
 
-  PeopleLoaded({this.peopleModel});
+  const PeopleLoaded({required this.peopleModel});
+  @override
+  List<Object> get props => [peopleModel];
 }
 
 class PeopleFailed extends PeopleState {

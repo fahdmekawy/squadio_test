@@ -13,11 +13,12 @@ class LoginUninitialized extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {
-  final LoginResponse? loginResponse;
-  final String? message;
+  final LoginResponse loginResponse;
 
-   const LoginSuccess({this.loginResponse, this.message});
+  const LoginSuccess({required this.loginResponse});
 
+  @override
+  List<Object> get props => [loginResponse];
 }
 
 class LoginFailed extends LoginState {
@@ -25,4 +26,6 @@ class LoginFailed extends LoginState {
 
   const LoginFailed({this.message});
 
+  @override
+  List<Object> get props => [message ?? ''];
 }
