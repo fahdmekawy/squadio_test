@@ -26,8 +26,8 @@ class HorizentalList extends StatelessWidget {
                   ),
                 )
               : Wrap(
-            runSpacing: 5,
-            spacing: 2,
+                  runSpacing: 5,
+                  spacing: 2,
                   direction: Axis.horizontal,
                   children: state.items
                           ?.map((e) => ItemCardWidget(name: e.name ?? ''))

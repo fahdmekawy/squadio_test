@@ -51,56 +51,55 @@ class _PeopleScreenState extends State<PeopleScreen> {
               final people = state.peopleModel;
               return SafeArea(
                   child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Switch.adaptive(
-                        value: toggleValue,
-                        activeColor: Colors.green[700],
-                        activeTrackColor: Colors.green[700]?.withOpacity(0.4),
-                        onChanged: (value) {
-                          setState(() {
-                            toggleValue = value;
-                          });
-                        }),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10.h),
-                        HorizentalList(toggleValue: toggleValue),
-                        Expanded(
-                          flex: 1,
-                          child: PeopleListWidget(people: people),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 1.sw,
-                    height: 50.h,
-                    color: Colors.white,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          DefaultButton(
-                            title: 'Clear',
-                            width: 100,
-                            onPressed: () {
-                              context.read<WishListBloc>().add(ClearList());
-                            },
-                          ),
-                          DefaultButton(
-                            title: 'Add',
-                            width: 100,
-                            onPressed: () {
-                              context.read<WishListBloc>().add(FetchList());
-                            },
-                          )
-                        ]),
-                  )
-                ],
-              ));
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Switch.adaptive(
+                            value: toggleValue,
+                            activeColor: Colors.green[700],
+                            activeTrackColor: Colors.green[700]?.withOpacity(0.4),
+                            onChanged: (value) {
+                              setState(() {
+                                toggleValue = value;
+                              });
+                            }),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10.h),
+                            HorizentalList(toggleValue: toggleValue),
+                            Expanded(
+                              flex: 1,
+                              child: PeopleListWidget(people: people),
+                            )
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      //   width: 1.sw,
+                      //   height: 50.h,
+                      //   color: Colors.white,
+                      //   child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //       children: [
+                      //         DefaultButton(
+                      //           title: 'Clear',
+                      //           width: 100,
+                      //           onPressed: () {
+                      //             context.read<WishListBloc>().add(ClearList());
+                      //           },
+                      //         ),
+                      //         DefaultButton(
+                      //           title: 'Add',
+                      //           width: 100,
+                      //           onPressed: () {
+                      //           },
+                      //         )
+                      //       ]),
+                      // )
+                    ],
+                  ));
             }
             return const Center(child: CircularProgressIndicator());
           },

@@ -58,10 +58,12 @@ class _PeopleListWidgetState extends State<PeopleListWidget> {
       itemBuilder: (context, index) => ListTile(
           onTap: () async {
             context.read<WishListBloc>().add(
-                  AddItemToList(
-                    item: widget.people[index],
-                  ),
-                );
+              AddItemToList(
+                item: widget.people[index],
+              ),
+            );
+            context.read<WishListBloc>().add(FetchList());
+
           },
           leading: CircleAvatar(
             backgroundColor: Colors.green[700],
@@ -77,16 +79,15 @@ class _PeopleListWidgetState extends State<PeopleListWidget> {
           ),
           trailing: BlocBuilder<WishListBloc, WishListState>(
             builder: (context, state) {
-              return state is ListLoaded &&
-                      (state.items?.contains(widget.people[index]) ?? false)
+              return context.read<WishListBloc>().isSelected(widget.people[index].id)
                   ? Icon(
-                      Icons.check_circle,
-                      color: Colors.green[700],
-                    )
+                Icons.check_circle,
+                color: Colors.green[700],
+              )
                   : const Icon(
-                      Icons.check_circle,
-                      color: Colors.grey,
-                    );
+                Icons.check_circle,
+                color: Colors.grey,
+              );
             },
           )),
     );
