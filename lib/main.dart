@@ -13,22 +13,20 @@ import 'bloc/firm_bloc/firm_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final String? token = await getToken();
-
+  final token =await getToken();
   runApp(MyApp(token: token));
 }
 
 class MyApp extends StatefulWidget {
   final String? token;
-
-  const MyApp({Key? key, this.token}) : super(key: key);
+  const MyApp({Key? key,this.token}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -37,7 +35,8 @@ class _MyAppState extends State<MyApp> {
         create: (_) => FirmsBloc()..add(FetchFirms()),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: HomeScreen.routeName,
+          initialRoute:
+              widget.token == null ? HomeScreen.routeName : PeopleScreen.routeName,
           routes: routes,
         ),
       ),

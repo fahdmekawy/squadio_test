@@ -1,11 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String TOKEN = 'token';
-const String SUB_DOMAIN = 'sub_domain';
+const String SUB_DOMAIN = 'subdomain';
 
-saveToken(String token) async {
+Future<void> saveToken(String? token) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  sharedPreferences.setString(TOKEN, token);
+  sharedPreferences.setString(TOKEN, token!);
 }
 
 Future<String?> getToken() async {
@@ -19,9 +19,9 @@ deleteToken() async {
   sharedPreferences.remove(TOKEN);
 }
 
-saveDomain(String subdomain) async {
+Future<void> saveDomain(String? subdomain) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  sharedPreferences.setString(SUB_DOMAIN, subdomain);
+  sharedPreferences.setString(SUB_DOMAIN, subdomain!);
 }
 
 Future<String?> getSubdomain() async {

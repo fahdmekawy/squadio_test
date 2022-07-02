@@ -6,7 +6,7 @@ import 'package:squadio_test/models/user_model/login_response.dart';
 class LoginRepository {
 
   static Future<LoginResponse> loginUser(
-      {required LoginModel loginModel, required String? subDomain}) async {
+      {required LoginModel loginModel, required String subDomain}) async {
     var response = await http.post(
       Uri.parse('https://$subDomain/tenant/login'),
       body: jsonEncode(loginModel.toJson()),

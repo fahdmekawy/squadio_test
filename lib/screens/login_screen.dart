@@ -23,28 +23,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isShow = true;
 
+  bool isShow = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+
+
   @override
   Widget build(BuildContext context) {
-    String? subdomain = ModalRoute.of(context)?.settings.arguments as String?;
-
     return Scaffold(
       appBar:
           buildAppBar(logOutButton: false, title: 'Login', backButton: false),
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(),
         child: BlocConsumer<LoginBloc, LoginState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is LoginSuccess) {
-              saveToken(state.loginResponse.data.token);
-              pushNameWithArguments(
-                context,
-                PeopleScreen.routeName,[state.loginResponse.data.token,subdomain]
-              );
+              pushName(context, PeopleScreen.routeName);
             } else if (state is LoginFailed) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message ?? '')));
@@ -98,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       email: emailController.text,
                                       password: passwordController.text,
                                     ),
-                                    subDomain: subdomain,
                                   ),
                                 );
                               },

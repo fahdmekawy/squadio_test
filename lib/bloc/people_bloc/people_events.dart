@@ -6,12 +6,12 @@ abstract class PeopleEvent extends Equatable {
 }
 
 class FetchPeople extends PeopleEvent {
-  String subDomain;
+  String? subDomain;
   int? page;
-  String token;
+  String? token;
 
   FetchPeople(
-      {required this.subDomain, this.page, required this.token});
+      { this.subDomain, this.page,  this.token});
   @override
-  List<Object> get props => [subDomain,page??0,token];
+  List<Object> get props => [subDomain??'',page??0,token??''];
 }

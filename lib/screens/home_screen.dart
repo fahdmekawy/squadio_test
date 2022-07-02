@@ -8,11 +8,16 @@ import 'package:squadio_test/screens/login_screen.dart';
 import 'package:squadio_test/widgets/firm_widget.dart';
 import '../helpers/navigators.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
 
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
@@ -36,9 +41,9 @@ class HomeScreen extends StatelessWidget {
                       controller: scrollController,
                       itemCount: state.data?.length,
                       itemBuilder: (context, index) => FirmWidget(
-                            onTap: () {
-                              saveDomain(state.data?[index]?.subdomain);
-                              pushNameWithArguments(context, LoginScreen.routeName,state.data?[index]?.subdomain);
+                            onTap: () async{
+                              await saveDomain(state.data?[index]?.subdomain);
+                              pushName(context, LoginScreen.routeName);
                             },
                             firmName: state.data?[index]?.firm,
                           )),

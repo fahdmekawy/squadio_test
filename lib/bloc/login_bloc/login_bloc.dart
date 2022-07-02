@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:squadio_test/repositories/authentication_repositroy.dart';
 import '../../models/user_model/login_response.dart';
 import '../../repositories/login_repository.dart';
 import 'login_events.dart';
@@ -13,10 +14,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoading());
 
     try {
+      final subDomain =await getSubdomain();
       LoginResponse loginResponse = await LoginRepository.loginUser(
-          loginModel: event.loginModel, subDomain: event.subDomain);
+          loginModel: event.loginModel, subDomain: subDomain??'');
 
       if (loginResponse.data != null) {
+        await saveToken(loginResponse.data.token);
         emit(LoginSuccess(loginResponse: loginResponse));
       } else {
         emit(LoginFailed(message: loginResponse.message));
